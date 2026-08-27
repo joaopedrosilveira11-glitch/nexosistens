@@ -1,0 +1,18 @@
+{
+  "name": "nfe-node-generator",
+  "version": "1.0.0",
+  "description": "Gerador, assinador e transmissor NF-e (modelo 55) - exemplo Node.js",
+  "main": "generate-xml.js",
+  "scripts": {
+    "generate": "node generate-xml.js",
+    "sign": "node sign-xml.js",
+    "transmit": "node transmit.js"
+  },
+  "dependencies": {
+    "xmlbuilder2": "^3.0.2",
+    "node-forge": "^1.3.1",
+    "xml-crypto": "^2.2.0",
+    "axios": "^1.4.0",
+    "jsdom": "^22.1.1"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "NEXO",
+  "short_name": "NEXO",
+  "description": "Plataforma operacional inteligente da NEXO para gestão de clientes, pedidos, produção e finanças.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07111d",
+  "theme_color": "#07111d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "uf": "MG",
+  "ambiente": "2",
+  "schemaVersion": "4.00",
+  "pfxPath": "./certs/empresa.pfx",
+  "pfxPassword": "SUA_SENHA_PFX",
+  "endpointAutorizacao": "https://nfehomologacao.fazenda.mg.gov.br/nfe2/services/NFeAutorizacao4",
+  "emitente": {
+    "cnpj": "00000000000000",
+    "ie": "000000000000",
+    "razao_social": "EMPRESA EXEMPLO LTDA",
+    "nome_fantasia": "EMPRESA EXEMPLO",
+    "endereco": "Logradouro, 123",
+    "municipio": "BELO HORIZONTE",
+    "uf": "MG",
+    "cep": "30100000"
+  }
+}

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DANFE - Modelo 55 (Template)</title>
+  <style>
+    /* A4 portrait printable layout */
+    @page { size: A4; margin: 10mm; }
+    html,body{height:100%;margin:0;padding:0;font-family: Arial, Helvetica, sans-serif;color:#000}
+    .page {width:210mm; min-height:297mm; padding:8mm; box-sizing:border-box}
+    .box{border:1px solid #000;}
+
+    /* Header */
+    .header{display:flex;gap:8px}
+    .header .left{flex:1;padding:8px}
+    .header .right{width:160px;padding:8px;text-align:right}
+    .company-name{font-weight:700;font-size:14px}
+    .danfe-title{font-weight:700;font-size:18px;text-align:center}
+
+    /* Top area with identification and access key */
+    .access-key{font-size:10px;border-left:1px solid #000;padding-left:6px}
+    .barcode{height:45px;background:#eee;display:flex;align-items:center;justify-content:center;margin-top:6px}
+    .nf-info{border:1px solid #000;padding:6px}
+n    /* Sections */
+    .section{margin-top:6px}
+    .two-cols{display:flex;gap:8px}
+    .col{flex:1}
+
+    table{width:100%;border-collapse:collapse}
+    th,td{border:1px solid #000;padding:4px;font-size:11px}
+    th{background:#f4f4f4}
+n    /* Products table - keep enough rows for printing */
+    .products thead th{font-size:10px}
+    .products tbody td{min-height:12mm}
+    .totals td{border:0}
+    /* Footer additional info */    .additional{margin-top:8px;height:40mm;border:1px solid #000;padding:6px}
+    /* Print-friendly */    @media print{      body{zoom:100%}    }  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Header with emitter and NF boxes -->
+    <div class="header box">
+      <div class="left">        <div class="company-name">{{emitente.razao_social}}</div>        <div>{{emitente.endereco}}</div>        <div>CEP: {{emitente.cep}} - {{emitente.municipio}}/{{emitente.uf}}</div>        <div>CNPJ: {{emitente.cnpj}} | IE: {{emitente.inscricao_estadual}}</div>      </div>      <div class="right">        <div class="danfe-title">DANFE</div>        <div style="font-size:12px;margin-top:6px">Nota Fiscal Eletrônica - NF-e</div>        <div class="nf-info" style="margin-top:8px">          <div>Nº: <strong>{{nf.numero}}</strong></div>          <div>Série: <strong>{{nf.serie}}</strong></div>          <div>Emissão: <strong>{{nf.data_emissao}}</strong></div>        </div>      </div>    </div>
+
+    <!-- Access key and barcode -->    <div class="section two-cols">      <div class="col box" style="padding:6px">        <div><strong>DESTINATÁRIO / REMETENTE</strong></div>        <div>{{destinatario.nome}} - {{destinatario.cnpj_cpf}}</div>        <div>{{destinatario.endereco}}</div>        <div>{{destinatario.municipio}} - {{destinatario.uf}} - CEP: {{destinatario.cep}}</div>        <div>Fone: {{destinatario.telefone}} | IE: {{destinatario.inscricao_estadual}}</div>      </div>      <div class="col box access-key">        <div style="font-weight:700;font-size:10px">CHAVE DE ACESSO</div>        <div style="word-break:break-all;font-size:10px;line-height:1.2;margin-top:6px">{{nf.chave_acesso}}</div>        <div class="barcode">[CÓDIGO DE BARRAS/GERADO A PARTIR DA CHAVE]</div>        <div style="font-size:9px;margin-top:6px">Consulte a autenticidade no portal nacional da NF-e</div>      </div>    </div>
+
+    <!-- Natureza da operação / protocolo / transportadora -->    <div class="section box" style="padding:6px">      <div style="display:flex;gap:12px;align-items:center">        <div style="flex:2"><strong>NATUREZA DA OPERAÇÃO:</strong> {{nf.natureza_operacao}}</div>        <div style="flex:1"><strong>PROTOCOLO AUT:</strong> {{nf.protocolo_autorizacao}}</div>      </div>    </div>
+
+    <!-- Products / services table -->    <div class="section box products">      <table>        <thead>          <tr>            <th style="width:8%">CÓD</th>            <th style="width:40%">DESCRIÇÃO DO PRODUTO / SERVIÇO</th>            <th style="width:6%">NCM</th>            <th style="width:6%">CFOP</th>            <th style="width:6%">UN</th>            <th style="width:6%">QTDE</th>            <th style="width:8%">VL UNIT</th>            <th style="width:10%">VL TOTAL</th>          </tr>        </thead>        <tbody>          <!-- Repeat rows as needed. Keep template with 12 empty rows for printing -->          {{#each produtos}}          <tr>            <td>{{this.codigo}}</td>            <td>{{this.descricao}}<div style="font-size:10px;color:#333">CNPJ/CEST: {{this.cest}}</div></td>            <td>{{this.ncm}}</td>            <td>{{this.cfop}}</td>            <td>{{this.unidade}}</td>            <td style="text-align:right">{{this.quantidade}}</td>            <td style="text-align:right">{{this.valor_unitario}}</td>            <td style="text-align:right">{{this.valor_total}}</td>          </tr>          {{/each}}          <!-- Fallback empty rows to keep layout -->          {{#if less_rows}}            {{#each empty_rows}}              <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>            {{/each}}          {{/if}}        </tbody>      </table>    </div>
+
+    <!-- Totals and taxes -->    <div class="section two-cols">      <div class="col box" style="padding:6px">        <div><strong>CÁLCULOS DO IMPOSTO</strong></div>        <table>          <tr><td>Base ICMS</td><td style="text-align:right">{{impostos.base_icms}}</td></tr>          <tr><td>Valor ICMS</td><td style="text-align:right">{{impostos.valor_icms}}</td></tr>          <tr><td>Valor IPI</td><td style="text-align:right">{{impostos.valor_ipi}}</td></tr>          <tr><td>Valor PIS</td><td style="text-align:right">{{impostos.valor_pis}}</td></tr>          <tr><td>Valor COFINS</td><td style="text-align:right">{{impostos.valor_cofins}}</td></tr>        </table>      </div>      <div class="col box" style="padding:6px">        <div><strong>VALORES</strong></div>        <table>          <tr><td>Valor dos Produtos</td><td style="text-align:right">{{totais.valor_produtos}}</td></tr>          <tr><td>Frete</td><td style="text-align:right">{{totais.valor_frete}}</td></tr>          <tr><td>Seguro</td><td style="text-align:right">{{totais.valor_seguro}}</td></tr>          <tr><td>Desconto</td><td style="text-align:right">{{totais.valor_desconto}}</td></tr>          <tr><td><strong>Valor Total da NF-e</strong></td><td style="text-align:right"><strong>{{totais.valor_nota}}</strong></td></tr>        </table>      </div>    </div>
+
+    <!-- Transportador / volumes -->    <div class="section box" style="padding:6px">      <div style="font-weight:700">TRANSPORTADOR / VOLUMES TRANSPORTADOS</div>      <div>{{transportador.nome}} - CNPJ: {{transportador.cnpj}}</div>      <div>Placa: {{transportador.placa}} | UF: {{transportador.uf}} | RNTC: {{transportador.rntc}}</div>    </div>
+
+    <!-- Additional information / observations -->    <div class="section additional">      <div style="font-weight:700;margin-bottom:6px">DADOS ADICIONAIS / INFORMAÇÕES COMPLEMENTARES</div>      <div style="font-size:12px">{{informacoes_complementares}}</div>    </div>
+        <div style="font-size:10px;margin-top:6px">Emitente: {{emitente.razao_social}} | CNPJ: {{emitente.cnpj}} | Chave: {{nf.chave_acesso}}</div>  </div></body></html>

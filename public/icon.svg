@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="NEXO logo">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#7dd3fc" />
+      <stop offset="55%" stop-color="#5b7cff" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="60" fill="#07111d"/>
+  <rect x="28" y="28" width="200" height="200" rx="52" fill="url(#g)"/>
+  <path d="M78 164V92h26l30 38 30-38h26v72h-24V125l-32 40-32-40v39H78z" fill="#091827"/>
+</svg>
