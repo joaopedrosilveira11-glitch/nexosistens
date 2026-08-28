@@ -1,6 +1,7 @@
 import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
+import { fileURLToPath } from 'node:url'
 import { env } from './config/env.js'
 import { securityConfig } from './config/security.js'
 import { apiLimiter, authLimiter } from './middleware/rateLimit.js'
@@ -20,7 +21,7 @@ import employeesRoutes from './modules/employees/employees.routes.js'
 import invoicesRoutes from './modules/invoices/invoices.routes.js'
 import { logger } from './utils/logger.js'
 
-const app = express()
+export const app = express()
 
 app.disable('x-powered-by')
 app.use(cors({
@@ -86,6 +87,14 @@ app.use((err: unknown, _req: express.Request, res: express.Response, _next: expr
   return res.status(500).json({ error: 'Unexpected server error.' })
 })
 
-app.listen(env.port, () => {
-  logger.info(`NEXO backend listening on http://localhost:${env.port}`)
-})
+export function startServer(port = env.port) {
+  return app.listen(port, () => {
+    logger.info(`NEXO backend listening on http://localhost:${port}`)
+  })
+}
+
+const isDirectExecution = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]
+
+if (isDirectExecution) {
+  startServer()
+}

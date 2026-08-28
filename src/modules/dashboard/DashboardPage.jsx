@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getEffectiveRoleValue } from '../../config/navigation'
+import { getApiBaseUrl } from '../../lib/api.js'
 import { useDashboardViewModel } from '../../hooks/useDashboardViewModel'
 import { SectionCard } from '../../components/common/SectionCard'
 
@@ -27,6 +28,7 @@ const dashboardModuleOptions = [
 ]
 
 const recentActivity = []
+const API_BASE = getApiBaseUrl() + '/api'
 
 export default function DashboardPage({ session, theme = 'dark', onThemeToggle }) {
   const name = session?.user?.name || session?.user?.email?.split('@')[0] || 'você'
@@ -102,7 +104,7 @@ export default function DashboardPage({ session, theme = 'dark', onThemeToggle }
     setAiResponse('')
 
     try {
-      const response = await fetch('http://localhost:4000/api/ai/chat', {
+      const response = await fetch(`${API_BASE}/ai/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

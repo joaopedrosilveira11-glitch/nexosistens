@@ -1,8 +1,9 @@
 ﻿import { useEffect, useMemo, useState } from "react"
 import { getEffectiveRoleValue, navigation } from "../../config/navigation"
+import { getApiBaseUrl } from "../../lib/api.js"
 import "./EmployeesPage.css"
 
-const API_BASE = 'http://localhost:4000/api'
+const API_BASE = getApiBaseUrl() + '/api'
 
 const defaultEmployees = []
 
