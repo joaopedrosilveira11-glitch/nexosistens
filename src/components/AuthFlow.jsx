@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { getDefaultModulesForRole } from '../config/navigation'
+import { getApiBaseUrl } from '../lib/api.js'
 import { supabase, syncTenantProfile } from '../lib/supabase'
 
-const backendUrl = (import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000') + '/api'
+const backendUrl = getApiBaseUrl() + '/api'
 
 const defaultForm = {
   name: '',

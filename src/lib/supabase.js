@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { getApiBaseUrl } from './api.js'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -19,7 +20,7 @@ export async function syncTenantProfile({ companyName, fullName, email, authUser
     throw new Error('Supabase client is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment.')
   }
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'
+  const backendUrl = getApiBaseUrl()
   const payload = {
     companyName: String(companyName || 'Minha empresa').trim() || 'Minha empresa',
     fullName: String(fullName || 'Usuário').trim() || 'Usuário',
@@ -51,7 +52,7 @@ export async function syncTenantProfile({ companyName, fullName, email, authUser
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Não foi possível sincronizar o tenant com o Supabase.'
     if (message.includes('Failed to fetch') || message.includes('ECONNREFUSED')) {
-      throw new Error('O backend do NEXO não está respondendo em http://localhost:4000. Inicie o backend para gravar no Supabase real.')
+      throw new Error(`O backend do NEXO não está respondendo em ${backendUrl}. Inicie o backend para gravar no Supabase real.`)
     }
 
     throw new Error(message)

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import { getApiBaseUrl } from '../../lib/api.js'
 import './CustomersPage.css'
 
-const API_BASE = 'http://localhost:4000/api'
+const API_BASE = getApiBaseUrl() + '/api'
 
 const defaultForm = {
   name: '',

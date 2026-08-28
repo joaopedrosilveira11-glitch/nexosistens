@@ -1,10 +1,11 @@
 ﻿import { useEffect, useState } from 'react'
 import { getEffectiveRoleValue } from '../../config/navigation'
+import { getApiBaseUrl } from '../../lib/api.js'
 import { supabase } from '../../lib/supabase'
 import './UsersPage.css'
 import EmployeesPage from '../employees/EmployeesPage'
 
-const backendUrl = (import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000') + '/api'
+const backendUrl = getApiBaseUrl() + '/api'
 
 const generateAccessCode = () => {
   const randomPart = Math.random().toString(36).slice(2, 8).toUpperCase()
